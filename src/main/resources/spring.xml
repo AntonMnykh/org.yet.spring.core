@@ -20,11 +20,21 @@
     <bean id="dateFormat" class="java.text.DateFormat"
           factory-method="getDateTimeInstance"/>
 
-    <bean id="eventLogger" class="Application.ConsoleEventLogger" />
+    <bean id="eventLogger" class="Application.logger.ConsoleEventLogger" />
 
     <bean id="app" class="Application.App">
         <constructor-arg ref="client" />
         <constructor-arg ref="eventLogger" />
+    </bean>
+
+    <bean id="fileEventLogger" class="Application.logger.FileEventLogger" init-method="init">
+        <constructor-arg value="target/events_log.txt"/>
+    </bean>
+
+    <bean id="cacheFileEventLogger" class="Application.logger.CacheFileEventLogger"
+          destroy-method="destroy">
+        <constructor-arg value="target/events_log.txt"/>
+        <constructor-arg value="5"/>
     </bean>
 
 </beans>
