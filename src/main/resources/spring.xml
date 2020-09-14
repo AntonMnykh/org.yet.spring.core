@@ -32,19 +32,22 @@
     </util:map>
 
     <bean id="event" class="Application.Event" scope="prototype">
-        <constructor-arg>
-            <bean class="java.util.Date"/>
-        </constructor-arg>
-        <constructor-arg ref="dateFormat"/>
+        <constructor-arg value="#{new java.util.Date()}"/>
+        <constructor-arg value="#{T(java.text.DateFormat).getDateTimeInstance()}"/>
     </bean>
 
-    <bean id="dateFormat" class="java.text.DateFormat"
-          factory-method="getDateTimeInstance"/>
+<!--    <bean id="dateFormat" class="java.text.DateFormat"-->
+<!--          factory-method="getDateTimeInstance"/>-->
 
     <bean id="app" class="Application.App">
         <constructor-arg ref="client" />
-        <constructor-arg ref="cacheFileEventLogger" />
+
+        <constructor-arg value="#{T(Application.Event).isDay(8,17) ? cacheFileEventLogger : consoleEventLogger}"/>
+
         <constructor-arg ref="loggerMap"/>
+
+        <property name="startupMessage" value="#{'Hello user ' + (systemProperties['os.name'].contains('Windows') ?
+            systemEnvironment['USERNAME'] : systemEnvironment['USER']) + '. Default logger is ' + app.defaultLogger.name }"/>
     </bean>
 
     <bean id="monitor" class="Application.utils.Monitor"/>

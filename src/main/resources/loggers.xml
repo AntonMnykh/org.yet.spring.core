@@ -16,6 +16,7 @@
           destroy-method="destroy"
           parent="fileEventLogger">
           <constructor-arg index="1" value="10"/>
+          <property name="name" value="#{fileEventLogger.name + ' with cache'}"/>
     </bean>
 
     <bean id="combinedEventLogger" class="Application.logger.CombinedEventLogger">
@@ -25,6 +26,7 @@
                 <ref bean="fileEventLogger"/>
             </list>
         </constructor-arg>
+        <property name="name" value="#{'Combined ' + combinedEventLogger.loggers.![name].toString()}"/>
     </bean>
 
 </beans>

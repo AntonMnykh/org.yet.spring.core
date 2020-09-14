@@ -3,8 +3,9 @@ package Application.logger;
 import Application.Event;
 
 import java.util.Collection;
+import java.util.Collections;
 
-public class CombinedEventLogger implements EventLogger{
+public class CombinedEventLogger extends AbstractLogger{
 
     private Collection<EventLogger> loggers;
 
@@ -18,5 +19,7 @@ public class CombinedEventLogger implements EventLogger{
         }
     }
 
-
+    public Collection<EventLogger> getLoggers() {
+        return Collections.unmodifiableCollection(loggers);
+    }
 }

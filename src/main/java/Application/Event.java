@@ -1,6 +1,7 @@
 package Application;
 
 import java.text.DateFormat;
+import java.time.LocalTime;
 import java.util.Date;
 
 public class Event {
@@ -11,6 +12,11 @@ public class Event {
     private DateFormat dateFormat;
 
     private int randomId = (int) Math.random()*100;
+
+    public static boolean isDay(int start, int end){
+        LocalTime time = LocalTime.now();
+        return time.getHour() > start && time.getHour() < end;
+    }
 
     public Event(Date date, DateFormat dateFormat) {
         this.id = randomId;
