@@ -1,13 +1,25 @@
 package Application;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.text.DateFormat;
 import java.util.Date;
 
+@Component
+@Scope("prototype")
 public class Event {
 
     private int id;
     private String message;
+
+    @Autowired
+    @Qualifier("newDate")
     private Date date;
+
+    @Autowired
     private DateFormat dateFormat;
 
     private int randomId = (int) Math.random()*100;

@@ -2,17 +2,25 @@ package Application.logger;
 
 import Application.Event;
 import org.apache.commons.io.FileUtils;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 
+@Component
 public class FileEventLogger implements EventLogger{
 
-    File file;
-    String fileName;
+    private File file;
+    //@Value("${events.file:target/events_log.txt}");
+
+    private String fileName;
 
     public FileEventLogger(String fileName) {
         this.fileName = fileName;
+    }
+
+    public FileEventLogger() {
     }
 
     public void logEvent(Event event){
@@ -23,6 +31,7 @@ public class FileEventLogger implements EventLogger{
         }
     }
 
+    @PostConstruct
     public void init() throws IOException {
         this.file = new File(fileName);
         if (file.exists() && !file.canWrite()){
