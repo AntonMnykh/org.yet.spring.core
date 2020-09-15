@@ -23,7 +23,8 @@ public class App {
     }
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+        ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml",
+                "loggers.xml", "aspects.xml", "db.xml");
 
         App app = (App) ctx.getBean("app");
 
@@ -44,7 +45,7 @@ public class App {
         event = ctx.getBean(Event.class);
         app.logEvent(null, event, "Some event for user 3");
 
-        app.outputLoggingCounter();
+//        app.outputLoggingCounter();
 
         ctx.close();
     }
@@ -61,22 +62,22 @@ public class App {
         logger.logEvent(event);
     }
 
-    private void outputLoggingCounter() {
-        if (statisticsAspect != null) {
-            System.out.println("Loggers statistics. Number of calls: ");
-            for (Map.Entry<Class<?>, Integer> entry: statisticsAspect.getCounter().entrySet()) {
-                System.out.println("    " + entry.getKey().getSimpleName() + ": " + entry.getValue());
-            }
-        }
-    }
+//    private void outputLoggingCounter() {
+//        if (statisticsAspect != null) {
+//            System.out.println("Loggers statistics. Number of calls: ");
+//            for (Map.Entry<Class<?>, Integer> entry: statisticsAspect.getCounter().entrySet()) {
+//                System.out.println("    " + entry.getKey().getSimpleName() + ": " + entry.getValue());
+//            }
+//        }
+//    }
 
     public void setStartupMessage(String startupMessage){
         this.startupMessage = startupMessage;
     }
 
-    public void setStatisticsAspect(StatisticsAspect statisticsAspect) {
-        this.statisticsAspect = statisticsAspect;
-    }
+//    public void setStatisticsAspect(StatisticsAspect statisticsAspect) {
+//        this.statisticsAspect = statisticsAspect;
+//    }
 
     public EventLogger getDefaultLogger(){
         return defaultLogger;
